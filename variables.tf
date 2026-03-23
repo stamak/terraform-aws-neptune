@@ -447,3 +447,9 @@ variable "public_cidr_blocks" {
   type        = list(string)
   default     = []
 }
+
+variable "s3_endpoint_prefix_list_ids" {
+  description = "(Optional) List of S3 VPC endpoint prefix list IDs to allow HTTPS egress for Neptune bulk load. Only used when create_neptune_security_group = true."
+  type        = list(string)
+  default     = []
+}

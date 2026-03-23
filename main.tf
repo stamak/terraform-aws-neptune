@@ -285,6 +285,18 @@ resource "aws_security_group" "this" {
     cidr_blocks = var.publicly_accessible ? concat(var.neptune_subnet_cidrs, var.public_cidr_blocks) : var.neptune_subnet_cidrs
   }
 
+  egress {
+    description      = "S3 gateway endpoint for Neptune bulk load"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    prefix_list_ids  = var.s3_endpoint_prefix_list_ids
+    cidr_blocks      = []
+    ipv6_cidr_blocks = []
+    security_groups  = []
+    self             = false
+  }
+
   tags = merge(
     try(var.tags, {}),
     try(var.neptune_security_group_tags, {})
